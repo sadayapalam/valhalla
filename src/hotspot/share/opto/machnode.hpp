@@ -104,6 +104,12 @@ public:
   }
 
 #if defined(IA32) || defined(AMD64)
+  KRegister  as_KRegister(PhaseRegAlloc *ra_, const Node *node)   const {
+    return ::as_KRegister(reg(ra_, node));
+  }
+  KRegister  as_KRegister(PhaseRegAlloc *ra_, const Node *node, int idx)   const {
+    return ::as_KRegister(reg(ra_, node, idx));
+  }
   XMMRegister  as_XMMRegister(PhaseRegAlloc *ra_, const Node *node)   const {
     return ::as_XMMRegister(reg(ra_, node));
   }
@@ -945,7 +951,7 @@ public:
 
   // Similar to cousin class CallNode::returns_pointer
   bool returns_pointer() const;
-  bool returns_vt() const;
+  bool returns_scalarized() const;
 
   bool guaranteed_safepoint() const { return _guaranteed_safepoint; }
 
